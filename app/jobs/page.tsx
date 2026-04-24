@@ -1,27 +1,10 @@
 import adsData from "@/lib/adsData.json";
-import { calcKpi, getDailyRows, getWeeklyRows, getCreativeSummaries } from "@/lib/utils";
 import type { AdRow } from "@/lib/types";
 import TabClient from "./TabClient";
 
-const REGIONS = ["광주", "대구", "부산", "대전"] as const;
-
 export default function 취업지원금Page() {
   const commonRows = adsData.common as AdRow[];
-  const commonKpi = calcKpi(commonRows);
-  const commonDaily = getDailyRows(commonRows);
-  const commonWeekly = getWeeklyRows(commonRows);
-  const commonCreatives = getCreativeSummaries(commonRows);
-
-  const regionalSets = REGIONS.map((region) => {
-    const rows = (adsData.regional as Record<string, AdRow[]>)[region];
-    return {
-      region,
-      kpi: calcKpi(rows),
-      daily: getDailyRows(rows),
-      weekly: getWeeklyRows(rows),
-      creatives: getCreativeSummaries(rows),
-    };
-  });
+  const regionalRows = adsData.regional as Record<string, AdRow[]>;
 
   return (
     <div>
@@ -34,14 +17,7 @@ export default function 취업지원금Page() {
         <h1 className="text-2xl font-bold text-gray-900">취업지원금찾기</h1>
         <p className="text-sm text-gray-400 mt-1">2024.04.25 ~ 2024.07.26 · 카카오 비즈보드 배너</p>
       </div>
-
-      <TabClient
-        commonKpi={commonKpi}
-        commonDaily={commonDaily}
-        commonWeekly={commonWeekly}
-        commonCreatives={commonCreatives}
-        regionalSets={regionalSets}
-      />
+      <TabClient commonRows={commonRows} regionalRows={regionalRows} />
     </div>
   );
 }
