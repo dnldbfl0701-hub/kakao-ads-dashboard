@@ -140,7 +140,10 @@ export default function TabClient({ commonKpi, commonDaily, commonWeekly, common
         <div className="space-y-6">
           <InsightBanner insights={commonInsights} />
           <section>
-            <h2 className="text-base font-semibold text-gray-700 mb-3">전체 성과</h2>
+            <div className="flex items-baseline gap-3 mb-3">
+              <h2 className="text-base font-semibold text-gray-700">전체 성과</h2>
+              <span className="text-xs text-gray-400">2024.04.25 ~ 2024.07.26</span>
+            </div>
             <KpiGrid kpi={commonKpi} />
           </section>
           <ConversionFunnel kpi={commonKpi} />
@@ -200,7 +203,10 @@ export default function TabClient({ commonKpi, commonDaily, commonWeekly, common
             ))}
           </div>
           <section>
-            <h2 className="text-base font-semibold text-gray-700 mb-3">{activeRegion.region} 전체 성과</h2>
+            <div className="flex items-baseline gap-3 mb-3">
+              <h2 className="text-base font-semibold text-gray-700">{activeRegion.region} 전체 성과</h2>
+              <span className="text-xs text-gray-400">2024.04.25 ~ 2024.07.26</span>
+            </div>
             <KpiGrid kpi={activeRegion.kpi} />
           </section>
           <ConversionFunnel kpi={activeRegion.kpi} />

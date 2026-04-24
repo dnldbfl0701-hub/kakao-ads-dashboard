@@ -63,7 +63,10 @@ export default function SeongsuPage() {
       <div className="space-y-6">
         <InsightBanner insights={insights} />
         <section>
-          <h2 className="text-base font-semibold text-gray-700 mb-3">전체 성과</h2>
+          <div className="flex items-baseline gap-3 mb-3">
+            <h2 className="text-base font-semibold text-gray-700">전체 성과</h2>
+            <span className="text-xs text-gray-400">2024.11.28 ~ 2024.12.08</span>
+          </div>
           <KpiGrid kpi={kpi} showPurchase />
         </section>
         <ConversionFunnel kpi={kpi} showPurchase />
