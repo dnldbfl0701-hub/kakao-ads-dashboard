@@ -1,20 +1,15 @@
-name: Deploy to GitHub Pages
+name: Deploy to Vercel
 
 on:
   push:
     branches: [master]
 
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+    env:
+      VERCEL_ORG_ID: team_mVkgq0ITlnhk182fYWV5TVzf
+      VERCEL_PROJECT_ID: prj_Bm1lLqIPzeN8sz405mgQIlvWsgqZ
     steps:
       - uses: actions/checkout@v4
 
@@ -23,15 +18,15 @@ jobs:
           node-version: "20"
           cache: "npm"
 
+      - run: npm install -g vercel
+
       - run: npm ci
 
-      - run: npm run build
+      - name: Pull Vercel settings
+        run: vercel pull --yes --environment=production --token=${{ secrets.VERCEL_TOKEN }}
 
-      - uses: actions/configure-pages@v4
+      - name: Build
+        run: vercel build --prod --token=${{ secrets.VERCEL_TOKEN }}
 
-      - uses: actions/upload-pages-artifact@v3
-        with:
-          path: out
-
-      - id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Deploy
+        run: vercel deploy --prebuilt --prod --token=${{ secrets.VERCEL_TOKEN }}
