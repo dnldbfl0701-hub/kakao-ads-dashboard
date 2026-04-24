@@ -49,11 +49,19 @@ export default function CreativeTable({ creatives, showPurchase = false }: Props
               <th className="text-right px-4 py-3 font-semibold text-gray-600">CPC</th>
               {!showPurchase && (
                 <>
-                  <th className="text-right px-4 py-3 font-semibold text-blue-500 whitespace-nowrap">장바구니 보기</th>
-                  <th className="text-right px-4 py-3 font-semibold text-blue-500 whitespace-nowrap">장바구니 추가</th>
-                  <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">잠재고객</th>
+                  <th className="text-right px-4 py-3 font-semibold text-blue-500 whitespace-nowrap">
+                    장바구니 보기<br /><span className="text-gray-300 font-normal text-xs">사전알림신청</span>
+                  </th>
+                  <th className="text-right px-4 py-3 font-semibold text-blue-500 whitespace-nowrap">
+                    장바구니 추가<br /><span className="text-gray-300 font-normal text-xs">1차 PV</span>
+                  </th>
+                  <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">
+                    잠재고객<br /><span className="text-gray-300 font-normal text-xs">1차 지원완료</span>
+                  </th>
                   <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">CPA(잠재)</th>
-                  <th className="text-right px-4 py-3 font-semibold text-orange-500 whitespace-nowrap">서비스신청</th>
+                  <th className="text-right px-4 py-3 font-semibold text-orange-500 whitespace-nowrap">
+                    서비스신청<br /><span className="text-gray-300 font-normal text-xs">2차 지원완료</span>
+                  </th>
                   <th className="text-right px-4 py-3 font-semibold text-orange-500 whitespace-nowrap">CPA(서비스)</th>
                 </>
               )}

@@ -18,6 +18,7 @@ export default function KpiGrid({ kpi, showPurchase = false }: Props) {
       {!showPurchase && kpi.firstConv > 0 && (
         <KpiCard
           label="잠재고객"
+          originalLabel="1차 지원완료"
           value={formatNum(kpi.firstConv)}
           sub={`CPA ${formatWon(kpi.firstConvCpa)}`}
           highlight
@@ -26,6 +27,7 @@ export default function KpiGrid({ kpi, showPurchase = false }: Props) {
       {!showPurchase && kpi.secondConv > 0 && (
         <KpiCard
           label="서비스신청"
+          originalLabel="2차 지원완료"
           value={formatNum(kpi.secondConv)}
           sub={`CPA ${formatWon(kpi.secondConvCpa)}`}
           highlight
@@ -34,6 +36,7 @@ export default function KpiGrid({ kpi, showPurchase = false }: Props) {
       {!showPurchase && kpi.preRegister > 0 && (
         <KpiCard
           label="장바구니 보기"
+          originalLabel="사전알림신청"
           value={formatNum(kpi.preRegister)}
           sub={`CPA ${formatWon(kpi.preRegisterCpa)}`}
         />
@@ -41,6 +44,7 @@ export default function KpiGrid({ kpi, showPurchase = false }: Props) {
       {!showPurchase && kpi.firstPv > 0 && (
         <KpiCard
           label="장바구니 추가"
+          originalLabel="1차 PV"
           value={formatNum(kpi.firstPv)}
           sub={`CPA ${formatWon(kpi.firstPvCpa)}`}
         />
