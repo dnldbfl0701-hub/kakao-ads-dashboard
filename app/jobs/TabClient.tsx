@@ -4,6 +4,7 @@ import { useState } from "react";
 import KpiGrid from "@/components/KpiGrid";
 import DailyChart from "@/components/DailyChart";
 import CreativeTable from "@/components/CreativeTable";
+import ConversionFunnel from "@/components/ConversionFunnel";
 import type { KpiData, DailyRow, CreativeSummary } from "@/lib/types";
 
 interface RegionalSet {
@@ -49,6 +50,7 @@ export default function TabClient({ commonKpi, commonDaily, commonCreatives, reg
             <h2 className="text-base font-semibold text-gray-700 mb-3">전체 성과</h2>
             <KpiGrid kpi={commonKpi} />
           </section>
+          <ConversionFunnel kpi={commonKpi} />
           <DailyChart data={commonDaily} />
           <section>
             <h2 className="text-base font-semibold text-gray-700 mb-3">소재별 성과</h2>
@@ -84,6 +86,7 @@ export default function TabClient({ commonKpi, commonDaily, commonCreatives, reg
                 </h2>
                 <KpiGrid kpi={activeRegion.kpi} />
               </section>
+              <ConversionFunnel kpi={activeRegion.kpi} />
               <DailyChart data={activeRegion.daily} />
               <section>
                 <h2 className="text-base font-semibold text-gray-700 mb-3">

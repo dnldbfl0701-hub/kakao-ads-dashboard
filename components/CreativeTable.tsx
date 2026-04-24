@@ -23,15 +23,17 @@ export default function CreativeTable({ creatives, showPurchase = false }: Props
               <th className="text-right px-4 py-3 font-semibold text-gray-600">CPC</th>
               {!showPurchase && (
                 <>
-                  <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">1차 지원완료</th>
-                  <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">CPA(1차)</th>
-                  <th className="text-right px-4 py-3 font-semibold text-orange-500 whitespace-nowrap">2차 지원완료</th>
-                  <th className="text-right px-4 py-3 font-semibold text-orange-500 whitespace-nowrap">CPA(2차)</th>
+                  <th className="text-right px-4 py-3 font-semibold text-blue-500 whitespace-nowrap">장바구니 보기</th>
+                  <th className="text-right px-4 py-3 font-semibold text-blue-500 whitespace-nowrap">장바구니 추가</th>
+                  <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">잠재고객</th>
+                  <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">CPA(잠재)</th>
+                  <th className="text-right px-4 py-3 font-semibold text-orange-500 whitespace-nowrap">서비스신청</th>
+                  <th className="text-right px-4 py-3 font-semibold text-orange-500 whitespace-nowrap">CPA(서비스)</th>
                 </>
               )}
               {showPurchase && (
                 <>
-                  <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">전환</th>
+                  <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">구매 전환</th>
                   <th className="text-right px-4 py-3 font-semibold text-yellow-600 whitespace-nowrap">CPA</th>
                 </>
               )}
@@ -48,6 +50,12 @@ export default function CreativeTable({ creatives, showPurchase = false }: Props
                 <td className="px-4 py-3 text-right text-gray-700">{formatWon(c.cpc)}</td>
                 {!showPurchase && (
                   <>
+                    <td className="px-4 py-3 text-right text-blue-600">
+                      {c.preRegister > 0 ? formatNum(c.preRegister) : "-"}
+                    </td>
+                    <td className="px-4 py-3 text-right text-blue-600">
+                      {c.firstPv > 0 ? formatNum(c.firstPv) : "-"}
+                    </td>
                     <td className="px-4 py-3 text-right font-semibold text-yellow-700">
                       {c.firstConv > 0 ? formatNum(c.firstConv) : "-"}
                     </td>

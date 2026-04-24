@@ -17,7 +17,7 @@ export default function KpiGrid({ kpi, showPurchase = false }: Props) {
       <KpiCard label="평균 CPC" value={formatWon(kpi.avgCpc)} />
       {!showPurchase && kpi.firstConv > 0 && (
         <KpiCard
-          label="1차 지원완료"
+          label="잠재고객"
           value={formatNum(kpi.firstConv)}
           sub={`CPA ${formatWon(kpi.firstConvCpa)}`}
           highlight
@@ -25,7 +25,7 @@ export default function KpiGrid({ kpi, showPurchase = false }: Props) {
       )}
       {!showPurchase && kpi.secondConv > 0 && (
         <KpiCard
-          label="2차 지원완료"
+          label="서비스신청"
           value={formatNum(kpi.secondConv)}
           sub={`CPA ${formatWon(kpi.secondConvCpa)}`}
           highlight
@@ -33,21 +33,21 @@ export default function KpiGrid({ kpi, showPurchase = false }: Props) {
       )}
       {!showPurchase && kpi.preRegister > 0 && (
         <KpiCard
-          label="사전알림신청"
+          label="장바구니 보기"
           value={formatNum(kpi.preRegister)}
           sub={`CPA ${formatWon(kpi.preRegisterCpa)}`}
         />
       )}
       {!showPurchase && kpi.firstPv > 0 && (
         <KpiCard
-          label="1차 PV"
+          label="장바구니 추가"
           value={formatNum(kpi.firstPv)}
           sub={`CPA ${formatWon(kpi.firstPvCpa)}`}
         />
       )}
       {showPurchase && kpi.purchase > 0 && (
         <KpiCard
-          label="전환"
+          label="구매 전환"
           value={formatNum(kpi.purchase)}
           sub={`CPA ${formatWon(kpi.purchaseCpa)}`}
           highlight

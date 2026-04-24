@@ -4,6 +4,7 @@ import type { AdRow } from "@/lib/types";
 import KpiGrid from "@/components/KpiGrid";
 import DailyChart from "@/components/DailyChart";
 import CreativeTable from "@/components/CreativeTable";
+import ConversionFunnel from "@/components/ConversionFunnel";
 
 export default function SeongsuPage() {
   const rows = adsData.seongsu as AdRow[];
@@ -28,6 +29,7 @@ export default function SeongsuPage() {
           <h2 className="text-base font-semibold text-gray-700 mb-3">전체 성과</h2>
           <KpiGrid kpi={kpi} showPurchase />
         </section>
+        <ConversionFunnel kpi={kpi} showPurchase />
         <DailyChart data={daily} />
         <section>
           <h2 className="text-base font-semibold text-gray-700 mb-3">소재별 성과</h2>
