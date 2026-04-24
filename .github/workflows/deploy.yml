@@ -7,6 +7,9 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env:
+      VERCEL_ORG_ID: team_mVkgq0ITlnhk182fYWV5TVzf
+      VERCEL_PROJECT_ID: prj_Bm1lLqIPzeN8sz405mgQIlvWsgqZ
     steps:
       - uses: actions/checkout@v4
 
@@ -20,4 +23,4 @@ jobs:
         run: npm ci
 
       - name: Deploy to Vercel
-        run: npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod --yes --scope dnldbfl0701-8713s-projects
+        run: npx vercel --token=${{ secrets.VERCEL_TOKEN }} --prod --yes
