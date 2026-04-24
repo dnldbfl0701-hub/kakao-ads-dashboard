@@ -119,10 +119,14 @@ export function getCreativeSummaries(rows: AdRow[]): CreativeSummary[] {
   }));
 }
 
+export function extractCreativeType(name: string): string | null {
+  const m = name.match(/취업지원금_[^_]+_([^_]+)_/);
+  return m ? m[1] : null;
+}
+
 function formatCreativeName(name: string): string {
-  // 지역_소재유형 패턴 처리
-  const regionalMatch = name.match(/취업지원금_(\w+)_(.+?)_\d+_/);
-  if (regionalMatch) return `${regionalMatch[2]}`;
+  const regionalMatch = name.match(/취업지원금_[^_]+_([^_]+)_/);
+  if (regionalMatch) return regionalMatch[1];
 
   const map: Record<string, string> = {
     "나만몰랐다고_1029x258": "나만몰랐다고",

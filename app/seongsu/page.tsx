@@ -1,10 +1,11 @@
 import adsData from "@/lib/adsData.json";
-import { calcKpi, getDailyRows, getWeeklyRows, getCreativeSummaries } from "@/lib/utils";
+import { calcKpi, getDailyRows, getWeeklyRows, getCreativeSummaries, formatWon, formatPct } from "@/lib/utils";
 import type { AdRow } from "@/lib/types";
 import KpiGrid from "@/components/KpiGrid";
 import DailyChart from "@/components/DailyChart";
 import CreativeTable from "@/components/CreativeTable";
 import ConversionFunnel from "@/components/ConversionFunnel";
+import InsightBanner from "@/components/InsightBanner";
 
 export default function SeongsuPage() {
   const rows = adsData.seongsu as AdRow[];
@@ -12,6 +13,40 @@ export default function SeongsuPage() {
   const daily = getDailyRows(rows);
   const weekly = getWeeklyRows(rows);
   const creatives = getCreativeSummaries(rows);
+
+  const bestCreative = creatives.filter((c) => c.purchase > 0).sort((a, b) => (a.cost / a.purchase) - (b.cost / b.purchase))[0];
+  const purchaseRate = kpi.totalClicks > 0 ? (kpi.purchase / kpi.totalClicks) * 100 : 0;
+
+  const insights = [
+    {
+      emoji: "🏆",
+      label: "최고 효율 소재",
+      value: bestCreative?.displayName ?? "-",
+      sub: bestCreative ? `구매 CPA ${formatWon(bestCreative.cost / bestCreative.purchase)}` : undefined,
+      color: "yellow" as const,
+    },
+    {
+      emoji: "🔄",
+      label: "클릭 → 구매 전환율",
+      value: `${purchaseRate.toFixed(2)}%`,
+      sub: `클릭 ${kpi.totalClicks.toLocaleString()}건 → 구매 ${kpi.purchase.toLocaleString()}건`,
+      color: "green" as const,
+    },
+    {
+      emoji: "💰",
+      label: "구매 전환 CPA",
+      value: kpi.purchase > 0 ? formatWon(kpi.purchaseCpa) : "-",
+      sub: kpi.purchase > 0 ? `총 ${kpi.purchase.toLocaleString()}건 전환` : undefined,
+      color: "orange" as const,
+    },
+    {
+      emoji: "👆",
+      label: "평균 CTR",
+      value: formatPct(kpi.avgCtr),
+      sub: `CPC ${formatWon(kpi.avgCpc)}`,
+      color: "blue" as const,
+    },
+  ];
 
   return (
     <div>
@@ -26,6 +61,7 @@ export default function SeongsuPage() {
       </div>
 
       <div className="space-y-6">
+        <InsightBanner insights={insights} />
         <section>
           <h2 className="text-base font-semibold text-gray-700 mb-3">전체 성과</h2>
           <KpiGrid kpi={kpi} showPurchase />
