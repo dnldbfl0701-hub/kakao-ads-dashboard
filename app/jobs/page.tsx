@@ -1,5 +1,5 @@
 import adsData from "@/lib/adsData.json";
-import { calcKpi, getDailyRows, getCreativeSummaries } from "@/lib/utils";
+import { calcKpi, getDailyRows, getWeeklyRows, getCreativeSummaries } from "@/lib/utils";
 import type { AdRow } from "@/lib/types";
 import TabClient from "./TabClient";
 
@@ -9,6 +9,7 @@ export default function 취업지원금Page() {
   const commonRows = adsData.common as AdRow[];
   const commonKpi = calcKpi(commonRows);
   const commonDaily = getDailyRows(commonRows);
+  const commonWeekly = getWeeklyRows(commonRows);
   const commonCreatives = getCreativeSummaries(commonRows);
 
   const regionalSets = REGIONS.map((region) => {
@@ -17,6 +18,7 @@ export default function 취업지원금Page() {
       region,
       kpi: calcKpi(rows),
       daily: getDailyRows(rows),
+      weekly: getWeeklyRows(rows),
       creatives: getCreativeSummaries(rows),
     };
   });
@@ -36,6 +38,7 @@ export default function 취업지원금Page() {
       <TabClient
         commonKpi={commonKpi}
         commonDaily={commonDaily}
+        commonWeekly={commonWeekly}
         commonCreatives={commonCreatives}
         regionalSets={regionalSets}
       />

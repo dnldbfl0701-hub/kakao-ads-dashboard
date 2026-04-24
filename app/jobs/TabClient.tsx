@@ -5,23 +5,25 @@ import KpiGrid from "@/components/KpiGrid";
 import DailyChart from "@/components/DailyChart";
 import CreativeTable from "@/components/CreativeTable";
 import ConversionFunnel from "@/components/ConversionFunnel";
-import type { KpiData, DailyRow, CreativeSummary } from "@/lib/types";
+import type { KpiData, DailyRow, WeeklyRow, CreativeSummary } from "@/lib/types";
 
 interface RegionalSet {
   region: string;
   kpi: KpiData;
   daily: DailyRow[];
+  weekly: WeeklyRow[];
   creatives: CreativeSummary[];
 }
 
 interface Props {
   commonKpi: KpiData;
   commonDaily: DailyRow[];
+  commonWeekly: WeeklyRow[];
   commonCreatives: CreativeSummary[];
   regionalSets: RegionalSet[];
 }
 
-export default function TabClient({ commonKpi, commonDaily, commonCreatives, regionalSets }: Props) {
+export default function TabClient({ commonKpi, commonDaily, commonWeekly, commonCreatives, regionalSets }: Props) {
   const [tab, setTab] = useState<"common" | "regional">("common");
   const [region, setRegion] = useState(regionalSets[0]?.region ?? "");
 
@@ -29,7 +31,6 @@ export default function TabClient({ commonKpi, commonDaily, commonCreatives, reg
 
   return (
     <div>
-      {/* 메인 탭 */}
       <div className="flex gap-1 bg-gray-100 rounded-xl p-1 w-fit mb-8">
         {(["common", "regional"] as const).map((t) => (
           <button
@@ -51,7 +52,7 @@ export default function TabClient({ commonKpi, commonDaily, commonCreatives, reg
             <KpiGrid kpi={commonKpi} />
           </section>
           <ConversionFunnel kpi={commonKpi} />
-          <DailyChart data={commonDaily} />
+          <DailyChart data={commonDaily} weeklyData={commonWeekly} />
           <section>
             <h2 className="text-base font-semibold text-gray-700 mb-3">소재별 성과</h2>
             <CreativeTable creatives={commonCreatives} />
@@ -61,7 +62,6 @@ export default function TabClient({ commonKpi, commonDaily, commonCreatives, reg
 
       {tab === "regional" && (
         <div className="space-y-6">
-          {/* 지역 탭 */}
           <div className="flex gap-2 flex-wrap">
             {regionalSets.map((r) => (
               <button
@@ -87,7 +87,7 @@ export default function TabClient({ commonKpi, commonDaily, commonCreatives, reg
                 <KpiGrid kpi={activeRegion.kpi} />
               </section>
               <ConversionFunnel kpi={activeRegion.kpi} />
-              <DailyChart data={activeRegion.daily} />
+              <DailyChart data={activeRegion.daily} weeklyData={activeRegion.weekly} />
               <section>
                 <h2 className="text-base font-semibold text-gray-700 mb-3">
                   {activeRegion.region} 소재별 성과

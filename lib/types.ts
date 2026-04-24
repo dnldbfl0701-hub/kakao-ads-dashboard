@@ -48,6 +48,16 @@ export interface DailyRow {
   cpc: number;
 }
 
+export interface WeeklyRow {
+  week: string;
+  weekLabel: string;
+  cost: number;
+  impressions: number;
+  clicks: number;
+  ctr: number;
+  cpc: number;
+}
+
 export interface CreativeSummary {
   name: string;
   displayName: string;

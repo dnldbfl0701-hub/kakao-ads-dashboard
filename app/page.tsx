@@ -24,9 +24,10 @@ export default function Home() {
       cost: commonKpi.totalCost + regionalKpi.totalCost,
       impressions: commonKpi.totalImpressions + regionalKpi.totalImpressions,
       clicks: commonKpi.totalClicks + regionalKpi.totalClicks,
-      conv1: commonKpi.firstConv + regionalKpi.firstConv,
-      conv2: commonKpi.secondConv + regionalKpi.secondConv,
-      color: "yellow",
+      convItems: [
+        { label: "잠재고객", value: commonKpi.firstConv + regionalKpi.firstConv, color: "yellow" },
+        { label: "서비스신청", value: commonKpi.secondConv + regionalKpi.secondConv, color: "orange" },
+      ],
     },
     {
       href: "/seongsu",
@@ -36,9 +37,9 @@ export default function Home() {
       cost: seongsuKpi.totalCost,
       impressions: seongsuKpi.totalImpressions,
       clicks: seongsuKpi.totalClicks,
-      conv1: seongsuKpi.purchase,
-      conv2: 0,
-      color: "blue",
+      convItems: [
+        { label: "구매 전환", value: seongsuKpi.purchase, color: "yellow" },
+      ],
     },
   ];
 
@@ -82,17 +83,20 @@ export default function Home() {
                 <p className="text-xs text-gray-500">총 클릭수</p>
                 <p className="font-bold text-gray-800 text-sm mt-0.5">{formatNum(c.clicks)}</p>
               </div>
-              {c.conv1 > 0 && (
-                <div className="bg-yellow-50 rounded-lg p-3">
-                  <p className="text-xs text-yellow-600">1차 지원완료</p>
-                  <p className="font-bold text-yellow-700 text-sm mt-0.5">{formatNum(c.conv1)}</p>
-                </div>
-              )}
-              {c.conv2 > 0 && (
-                <div className="bg-orange-50 rounded-lg p-3">
-                  <p className="text-xs text-orange-600">2차 지원완료</p>
-                  <p className="font-bold text-orange-700 text-sm mt-0.5">{formatNum(c.conv2)}</p>
-                </div>
+              {c.convItems.map((item) =>
+                item.value > 0 ? (
+                  <div
+                    key={item.label}
+                    className={`rounded-lg p-3 ${item.color === "orange" ? "bg-orange-50" : "bg-yellow-50"}`}
+                  >
+                    <p className={`text-xs ${item.color === "orange" ? "text-orange-600" : "text-yellow-600"}`}>
+                      {item.label}
+                    </p>
+                    <p className={`font-bold text-sm mt-0.5 ${item.color === "orange" ? "text-orange-700" : "text-yellow-700"}`}>
+                      {formatNum(item.value)}
+                    </p>
+                  </div>
+                ) : null
               )}
             </div>
           </Link>

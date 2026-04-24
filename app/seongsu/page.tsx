@@ -1,5 +1,5 @@
 import adsData from "@/lib/adsData.json";
-import { calcKpi, getDailyRows, getCreativeSummaries } from "@/lib/utils";
+import { calcKpi, getDailyRows, getWeeklyRows, getCreativeSummaries } from "@/lib/utils";
 import type { AdRow } from "@/lib/types";
 import KpiGrid from "@/components/KpiGrid";
 import DailyChart from "@/components/DailyChart";
@@ -10,6 +10,7 @@ export default function SeongsuPage() {
   const rows = adsData.seongsu as AdRow[];
   const kpi = calcKpi(rows);
   const daily = getDailyRows(rows);
+  const weekly = getWeeklyRows(rows);
   const creatives = getCreativeSummaries(rows);
 
   return (
@@ -30,7 +31,7 @@ export default function SeongsuPage() {
           <KpiGrid kpi={kpi} showPurchase />
         </section>
         <ConversionFunnel kpi={kpi} showPurchase />
-        <DailyChart data={daily} />
+        <DailyChart data={daily} weeklyData={weekly} />
         <section>
           <h2 className="text-base font-semibold text-gray-700 mb-3">소재별 성과</h2>
           <CreativeTable creatives={creatives} showPurchase />

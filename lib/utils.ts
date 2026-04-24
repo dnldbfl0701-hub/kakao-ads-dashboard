@@ -1,4 +1,4 @@
-import type { AdRow, KpiData, DailyRow, CreativeSummary } from "./types";
+import type { AdRow, KpiData, DailyRow, WeeklyRow, CreativeSummary } from "./types";
 
 const n = (v: string) => parseFloat(v) || 0;
 
@@ -48,6 +48,45 @@ export function getDailyRows(rows: AdRow[]): DailyRow[] {
       ...d,
       ctr: d.impressions > 0 ? (d.clicks / d.impressions) * 100 : 0,
       cpc: d.clicks > 0 ? d.cost / d.clicks : 0,
+    }));
+}
+
+export function getWeeklyRows(rows: AdRow[]): WeeklyRow[] {
+  const byWeek: Record<string, WeeklyRow> = {};
+  rows.forEach((r) => {
+    const raw = r["일"]; // "2024.04.25"
+    const parts = raw.split(".");
+    const year = parseInt(parts[0]);
+    const month = parseInt(parts[1]) - 1;
+    const day = parseInt(parts[2]);
+    const d = new Date(year, month, day);
+    // 해당 날짜가 속한 주의 월요일 계산
+    const dow = d.getDay(); // 0=일,1=월...6=토
+    const diff = dow === 0 ? -6 : 1 - dow;
+    const monday = new Date(d);
+    monday.setDate(d.getDate() + diff);
+    const weekKey = `${monday.getFullYear()}.${String(monday.getMonth() + 1).padStart(2, "0")}.${String(monday.getDate()).padStart(2, "0")}`;
+    const mm = String(monday.getMonth() + 1).padStart(2, "0");
+    const dd = String(monday.getDate()).padStart(2, "0");
+    const endDate = new Date(monday);
+    endDate.setDate(monday.getDate() + 6);
+    const em = String(endDate.getMonth() + 1).padStart(2, "0");
+    const ed = String(endDate.getDate()).padStart(2, "0");
+    const weekLabel = `${mm}/${dd}~${em}/${ed}`;
+    if (!byWeek[weekKey]) {
+      byWeek[weekKey] = { week: weekKey, weekLabel, cost: 0, impressions: 0, clicks: 0, ctr: 0, cpc: 0 };
+    }
+    byWeek[weekKey].cost += n(r["비용"]);
+    byWeek[weekKey].impressions += n(r["노출수"]);
+    byWeek[weekKey].clicks += n(r["클릭수"]);
+  });
+  return Object.values(byWeek)
+    .sort((a, b) => a.week.localeCompare(b.week))
+    .map((w, i) => ({
+      ...w,
+      weekLabel: `${i + 1}주차 (${w.weekLabel})`,
+      ctr: w.impressions > 0 ? (w.clicks / w.impressions) * 100 : 0,
+      cpc: w.clicks > 0 ? w.cost / w.clicks : 0,
     }));
 }
 
